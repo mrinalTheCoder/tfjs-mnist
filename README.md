@@ -3,9 +3,9 @@ I trained a model for MNIST digot recognition and saved the keras model as an .h
 
 ### Converting models
 I used the `tensorflowjs_converter` to convert the model from .h5 to the required formats. <br/>
-To convert to TensorFlow JS Graph model: <br/></br/>
+To convert to TensorFlow JS Graph model: <br/><br/>
 `tensorflowjs_converter  --output_format tfjs_graph_model --input_format keras mnist_model.h5 ./model_graph`<br/><br/>
-To convert to TensorFlow JS Layers model: <br/></br/>
+To convert to TensorFlow JS Layers model: <br/><br/>
 `tensorflowjs_converter  --output_format tfjs_layers_model --input_format keras mnist_model.h5 ./model_layers`<br/><br/>
 The above commands created the model in the [model_graph](https://github.com/mrinalTheCoder/tfjs-mnist/tree/master/model_graph) and [model_layers](https://github.com/mrinalTheCoder/tfjs-mnist/tree/master/model_layers) directories respectively.
 
