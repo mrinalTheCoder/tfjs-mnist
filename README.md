@@ -15,3 +15,20 @@ I ran the code in Chrome browser on my local machine. This required to launch a 
 
 ### HTML file
 The `<head>` loads tfjs and defines the charset, title, etc. I have added an image in the `<body>` that corresponds to the digit 7. In the `<script>`, the img is first converted to a Tensor. Then, 2 async tasks are defined, one for the graph model and the other for the layers model. They load the models, run the prediction, log the output to the console and return the output. Both were successfully able to predict the digit correctly.
+
+### Loading the model
+We use async programming in javascript, the model is loaded from the .json file using `tf.loadGraphModel` as follows:<br/<<br/>
+`async () => {
+    const model = await tf.loadGraphModel("model_graph/model.json");
+}`
+
+### Prediction
+To make the prediction, invoke the `predict` method on the model loaded above as follows: <br/><br/>
+`const predictions_graph = await model.predict(inp_data.toFloat());`<br/><br/>
+`predictions_graph` will have the predictions for the JS Graph model, hence the name.
+
+### Digit Recognition
+The above prediction will give a tensor with the probablity of each digit as predicted by the model. So, we need to run `argMax` on the predictions to get the digit with the maximum probability as follows:<br/><br/>
+`predictions_graph.argMax(1)`<br/><br/>
+However, the above returns a Tensor. To return the digit:<br/><br/>
+`return predictions_layers.argMax(1).dataSync()[0];`
