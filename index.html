@@ -13,14 +13,22 @@
     <table>
       <tr>
         <td>Prediction using Graph Model: </td>
-        <td id="graph_pred"></td>
+        <td id="graph_pred">None</td>
       </tr>
       <tr>
         <td>Prediction using Layers Model: </td>
-        <td id="layer_pred"></td>
+        <td id="layer_pred">None</td>
       </tr>
     </table>
     <script>
+      function setLayersPred(val) {
+        document.getElementById("layer_pred").innerText = val;
+      }
+
+      function setGraphPred(val) {
+        document.getElementById("graph_pred").innerText = val;
+      }
+
       const img = document.getElementById('digit_img');
       var inp_data = tf.browser.fromPixels(img, numChannels=1);
       inp_data = inp_data.reshape([1, 28, 28, 1])
@@ -32,7 +40,7 @@
 
         const predictions_graph = await model.predict(inp_data.toFloat());
         console.log('Predictions from graph model: ' + predictions_graph.argMax(1).print());
-        document.getElementByID("graph_pred").value = predictions_graph.argMax(1);
+        return predictions_graph.argMax(1).dataSync()[0];
       }
 
       const predictImageFromLayersModel = async () => {
@@ -42,10 +50,17 @@
 
         const predictions_layers = await model.predict(inp_data.toFloat());
         console.log('Predictions from layers model: ' + predictions_layers.argMax(1).print());
-        document.getElementByID("layers_pred").value = predictions_layers.argMax(1);
+        return predictions_layers.argMax(1).dataSync()[0];
       }
-      predictImageFromLayersModel();
-      predictImageFromGraphModel();
+      predictImageFromGraphModel().then((val)=>{
+        //alert(val);
+        setGraphPred(val);
+      });
+
+      predictImageFromLayersModel().then((val)=>{
+        //alert(val);
+        setLayersPred(val);
+      });
     </script>
   </body>
 
