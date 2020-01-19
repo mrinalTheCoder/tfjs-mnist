@@ -1,0 +1,40 @@
+<html lang="e">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tensorflow js convert model</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+  </head>
+
+  <body>
+    <img id="digit_img" src="sample_digit.png" width=28 height=28/>
+    <script>
+      const img = document.getElementById('digit_img');
+      var inp_data = tf.browser.fromPixels(img, numChannels=1);
+      inp_data = inp_data.reshape([1, 28, 28, 1])
+
+      const predictImageFromGraphModel = async () => {
+        console.log("Graph model loading...");
+        const model = await tf.loadGraphModel("model_graph/model.json");
+        console.log("Graph model is loaded!");
+
+        const predictions_graph = await model.predict(inp_data.toFloat());
+        console.log('Predictions from graph model: ' + predictions_graph.print());
+      }
+
+      const predictImageFromLayersModel = async () => {
+        console.log("Layers model loading...");
+        const model = await tf.loadLayersModel("model_layers/model.json");
+        console.log("Layers model is loaded!");
+
+        const predictions_layers = await model.predict(inp_data.toFloat());
+        console.log('Predictions from layers model: ' + predictions_layers.print());
+      }
+      predictImageFromLayersModel();
+      predictImageFromGraphModel();
+    </script>
+  </body>
+
+</html>
