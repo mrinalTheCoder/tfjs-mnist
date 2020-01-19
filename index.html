@@ -21,7 +21,7 @@
         console.log("Graph model is loaded!");
 
         const predictions_graph = await model.predict(inp_data.toFloat());
-        console.log('Predictions from graph model: ' + predictions_graph.print());
+        console.log('Predictions from graph model: ' + predictions_graph.argMax(1).print());
       }
 
       const predictImageFromLayersModel = async () => {
@@ -30,7 +30,7 @@
         console.log("Layers model is loaded!");
 
         const predictions_layers = await model.predict(inp_data.toFloat());
-        console.log('Predictions from layers model: ' + predictions_layers.print());
+        console.log('Predictions from layers model: ' + predictions_layers.argMax(1).print());
       }
       predictImageFromLayersModel();
       predictImageFromGraphModel();
