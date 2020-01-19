@@ -32,6 +32,7 @@
 
         const predictions_graph = await model.predict(inp_data.toFloat());
         console.log('Predictions from graph model: ' + predictions_graph.argMax(1).print());
+        document.getElementByID("graph_pred").value = predictions_graph.argMax(1);
       }
 
       const predictImageFromLayersModel = async () => {
@@ -41,6 +42,7 @@
 
         const predictions_layers = await model.predict(inp_data.toFloat());
         console.log('Predictions from layers model: ' + predictions_layers.argMax(1).print());
+        document.getElementByID("layers_pred").value = predictions_layers.argMax(1);
       }
       predictImageFromLayersModel();
       predictImageFromGraphModel();
