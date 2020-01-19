@@ -10,6 +10,16 @@
 
   <body>
     <img id="digit_img" src="sample_digit.png" width=28 height=28/>
+    <table>
+      <tr>
+        <td>Prediction using Graph Model: </td>
+        <td id="graph_pred"></td>
+      </tr>
+      <tr>
+        <td>Prediction using Layers Model: </td>
+        <td id="layer_pred"></td>
+      </tr>
+    </table>
     <script>
       const img = document.getElementById('digit_img');
       var inp_data = tf.browser.fromPixels(img, numChannels=1);
